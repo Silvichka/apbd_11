@@ -5,9 +5,11 @@ namespace Tutorial5.Data;
 
 public class DatabaseContext : DbContext
 {
-    public DbSet<Book> Books { get; set; }
-    public DbSet<Author> Authors { get; set; }
-    public DbSet<BookAuthor> BookAuthors { get; set; }
+    public DbSet<Doctor> Doctors { get; set; }
+    public DbSet<Patient> Patients { get; set; }
+    public DbSet<Prescription> Prescriptions { get; set; }
+    public DbSet<Medicament> Medicaments { get; set; }
+    public DbSet<Prescription_Medicament> PrescriptionMedicaments { get; set; }
     
     protected DatabaseContext()
     {
@@ -19,31 +21,33 @@ public class DatabaseContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Author>(a =>
+        modelBuilder.Entity<Doctor>().HasData(new List<Doctor>()
         {
-            a.ToTable("Author");
-            
-            a.HasKey(e => e.AuthorId);
-            a.Property(e => e.FirstName).HasMaxLength(100);
-            a.Property(e => e.LastName).HasMaxLength(200);
-        });
-
-        modelBuilder.Entity<Author>().HasData(new List<Author>()
-        {
-            new Author() { AuthorId = 1, FirstName = "Jane", LastName = "Doe"},
-            new Author() { AuthorId = 2, FirstName = "John", LastName = "Doe"},
+            new Doctor() { IdDoctor = 1, FirstName = "Alice", LastName = "Bennett", Email = "alice.bennett@clinic.com" },
+            new Doctor() { IdDoctor = 2, FirstName = "Liam", LastName = "Walker", Email = "liam.walker@health.org" },
         });
         
-        modelBuilder.Entity<Book>().HasData(new List<Book>()
+        modelBuilder.Entity<Patient>().HasData(new List<Patient>()
         {
-            new Book() { BookId = 1, Name = "Book 1", Price = 10.2 },
-            new Book() { BookId = 2, Name = "Book 2", Price = 123.2 },
+            new Patient() { IdPatient = 1, FirstName = "Oliver", LastName = "Stone", BirthDate = new DateTime()},
+            new Patient() { IdPatient = 2, FirstName = "Emma", LastName = "Brown", BirthDate = new DateTime()},
         });
         
-        modelBuilder.Entity<BookAuthor>().HasData(new List<BookAuthor>()
+        modelBuilder.Entity<Medicament>().HasData(new List<Medicament>()
         {
-            new BookAuthor() { AuthorId = 1, BookId = 1, Notes = "n1" },
-            new BookAuthor() { AuthorId = 2, BookId = 1, Notes = "n2" },
+            new Medicament() { IdMedicament = 1, Name = "Ibuprofen", Description = "Anti-inflammatory drug", Type = "Tablet",},
+            new Medicament() { IdMedicament = 2, Name = "Cetirizine", Description = "Antihistamine", Type = "Syrup"},
+        });
+        
+        modelBuilder.Entity<Prescription_Medicament>().HasData(new List<Prescription_Medicament>()
+        {
+            new Prescription_Medicament() { IdMedicament = 1, IdPrescription = 1, Dose = 1, Details = "",},
+        });
+        
+        modelBuilder.Entity<Prescription>().HasData(new List<Prescription>()
+        {
+            new Prescription() { IdPrescription = 1, IdDoctor = 1, IdPatient = 1, Date = new DateTime(), DueDate = new DateTime()},
         });
     }
+    
 }
