@@ -45,6 +45,10 @@ public class PrescriptionService : IPrescriptionService
             _context.Patients.Add(patient);
             await _context.SaveChangesAsync();
         }
+        
+        var doctorExists = await _context.Doctors.AnyAsync(d => d.IdDoctor == prescription.IdDoctor);
+        if (!doctorExists)
+            throw new Exception("The specified doctor does not exist.");
 
         var newPrescription = new Prescription
         {

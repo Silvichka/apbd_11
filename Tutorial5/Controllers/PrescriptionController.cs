@@ -12,20 +12,12 @@ namespace Tutorial5.Controllers;
 public class PrescriptionController : ControllerBase
 {
     private readonly IPrescriptionService _prescriptionService;
-    private readonly DatabaseContext _context;
 
     public PrescriptionController(IPrescriptionService prescriptionService, DatabaseContext context)
     {
         _prescriptionService = prescriptionService;
-        _context = context;
     }
-
-    [HttpGet("get")]
-    public async Task<IActionResult> get()
-    {
-        var res = await _context.Patients.ToListAsync();
-        return Ok(res);
-    }
+    
     
     [HttpPost]
     public async Task<IActionResult> AddPrescription([FromBody] PrescriptionDTO prescription)

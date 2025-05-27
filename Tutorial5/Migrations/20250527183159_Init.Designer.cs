@@ -12,7 +12,7 @@ using Tutorial5.Data;
 namespace Tutorial5.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20250524174428_Init")]
+    [Migration("20250527183159_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -20,7 +20,7 @@ namespace Tutorial5.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.15")
+                .HasAnnotation("ProductVersion", "9.0.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
